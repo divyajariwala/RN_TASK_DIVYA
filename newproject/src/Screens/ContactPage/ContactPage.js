@@ -44,18 +44,16 @@ export default class ContactPage extends Component {
     }).then(resposne => {
       console.log("response", resposne);
       this.setState({
-        count: this.state.count + 1,
+        // count: this.state.count + 1,
         userList: [...this.state.userList, ...resposne.data.data.users],
         spinner: false
       })
     }).catch(error => console.log("-----!Error!----", error))
   }
-  onScroll = () => {
-    this.setState({ hasScrolled: true })
-  }
-  handleLoadMore = () => {
-    if (!this.state.hasScrolled) { return null; }
-    this.getData()
+  LoadMoreRandomData = () => {
+    this.setState({
+      count: this.state.count + 1
+    }, () => this.getData())
   }
   render() {
     return (
@@ -86,8 +84,8 @@ export default class ContactPage extends Component {
             style={{ marginBottom: height(10) }}
             showsVerticalScrollIndicator={false}
             keyExtractor={(item, index) => index.toString()}
-            // onEndReached={this.getData()}
-            onScroll={this.onScroll}
+            onEndReachedThreshold={0.5}
+            onEndReached={this.LoadMoreRandomData}
             renderItem={(data, item) => {
               return (
                 <ListView

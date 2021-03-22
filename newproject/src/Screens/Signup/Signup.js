@@ -49,7 +49,6 @@ export default class Signup extends Component {
     this.setState({
       spinner: true
     })
-
     axios({
       method: 'post',
       url: 'http://68.183.48.101:3333/users/register',
